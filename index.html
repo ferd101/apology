@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>I’m Sorry 🤍</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #fbe4ec, #e8f4ff);
+        font-family: "Segoe UI", sans-serif;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .container {
+        max-width: 700px;
+        padding: 30px;
+        animation: fadeIn 1s ease;
+    }
+
+    h1 {
+        color: #c2185b;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    button {
+        margin-top: 25px;
+        padding: 12px 30px;
+        font-size: 18px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .continue {
+        background-color: #c2185b;
+        color: white;
+    }
+
+    .continue:hover {
+        transform: scale(1.05);
+    }
+
+    .yesBtn {
+        background-color: #c2185b;
+        color: white;
+    }
+
+    .noBtn {
+        background-color: #ffcdd2;
+        color: #880e4f;
+    }
+
+    img {
+        width: 140px;
+        margin-bottom: 20px;
+        animation: bounce 2s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+        0%,100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="content">
+    <!-- Content loads here -->
+</div>
+
+<script>
+
+const pages = [
+`<img src="https://upload.wikimedia.org/wikipedia/en/0/05/Hello_Kitty_character_portrait.png">
+<h1>I'm sorry for constantly saying and doing dumb things that cause issues between us.</h1>
+<button class="continue" onclick="nextPage()">Continue</button>`,
+
+`<img src="https://upload.wikimedia.org/wikipedia/en/0/05/Hello_Kitty_character_portrait.png">
+<h1>I have A LOT of faults and insecurities that I am working on to avoid such from happening again.</h1>
+<button class="continue" onclick="nextPage()">Continue</button>`,
+
+`<img src="https://upload.wikimedia.org/wikipedia/en/0/05/Hello_Kitty_character_portrait.png">
+<h1>The last thing I want is for me to do something so stupid that it pushes you away and I end up losing you.</h1>
+<button class="continue" onclick="nextPage()">Continue</button>`,
+
+`<img src="https://upload.wikimedia.org/wikipedia/en/0/05/Hello_Kitty_character_portrait.png">
+<h1>I really do like you and I want you to know that,<br><br>so will you PLEASE forgive me?</h1>
+<div style="margin-top:20px;">
+<button id="yesBtn" class="yesBtn" onclick="forgiven()">Yes 🤍</button>
+<button id="noBtn" class="noBtn" onclick="shrinkNo()">No</button>
+</div>`
+];
+
+let currentPage = 0;
+let noClicks = 0;
+
+function nextPage() {
+    currentPage++;
+    document.getElementById("content").innerHTML = pages[currentPage];
+}
+
+function shrinkNo() {
+    noClicks++;
+
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+
+    yesBtn.style.transform = `scale(${1 + noClicks * 0.2})`;
+    noBtn.style.transform = `scale(${1 - noClicks * 0.2})`;
+
+    if (noClicks >= 4) {
+        noBtn.style.display = "none";
+    }
+}
+
+function forgiven() {
+    document.getElementById("content").innerHTML = `
+        <img src="https://upload.wikimedia.org/wikipedia/en/0/05/Hello_Kitty_character_portrait.png">
+        <h1>Thank you 🤍</h1>
+        <p style="font-size:20px;">
+        I promise I’m trying to be better, not just for you — but for myself too.
+        </p>
+    `;
+}
+
+// Load first page
+document.getElementById("content").innerHTML = pages[0];
+
+</script>
+
+</body>
+</html>
