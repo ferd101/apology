@@ -11,20 +11,24 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: linear-gradient(135deg, #fbe4ec, #e8f4ff);
+        background: linear-gradient(135deg, #fde2e4, #e2f0ff);
         font-family: "Segoe UI", sans-serif;
         text-align: center;
+        overflow: hidden;
     }
 
     .container {
         max-width: 700px;
         padding: 30px;
         animation: fadeIn 1s ease;
+        position: relative;
+        z-index: 2;
     }
 
     h1 {
-        color: #c2185b;
+        color: #b03060;
         font-size: 26px;
+        line-height: 1.5;
     }
 
     button {
@@ -39,12 +43,12 @@
     }
 
     .continue {
-        background-color: #c2185b;
+        background-color: #b03060;
         color: white;
     }
 
     .yesBtn {
-        background-color: #c2185b;
+        background-color: #b03060;
         color: white;
     }
 
@@ -53,9 +57,27 @@
         color: white;
     }
 
-    img {
-        width: 160px;
+    .flowers {
+        font-size: 60px;
         margin-bottom: 20px;
+    }
+
+    .heart {
+        position: absolute;
+        font-size: 20px;
+        animation: floatUp 6s linear infinite;
+        opacity: 0.7;
+    }
+
+    @keyframes floatUp {
+        from {
+            transform: translateY(100vh);
+            opacity: 1;
+        }
+        to {
+            transform: translateY(-10vh);
+            opacity: 0;
+        }
     }
 
     @keyframes fadeIn {
@@ -71,41 +93,41 @@
 
 <script>
 
-const kittyImage = `
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Hello_Kitty_Sanrio_Character.svg/512px-Hello_Kitty_Sanrio_Character.svg.png">
-`;
+// Floating hearts
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.textContent = Math.random() > 0.5 ? "💗" : "🌸";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 500);
+
 
 const pages = [
 
-`${kittyImage}
+`<div class="flowers">🌸🌷🌹🌷🌸</div>
 <h1>I'm sorry for constantly saying and doing dumb things that cause issues between us.</h1>
 <button class="continue" onclick="nextPage()">Continue</button>`,
 
-`${kittyImage}
+`<div class="flowers">🌸💗🌸</div>
 <h1>I have A LOT of faults and insecurities that I am working on to avoid such from happening again.</h1>
 <button class="continue" onclick="nextPage()">Continue</button>`,
 
-`${kittyImage}
+`<div class="flowers">🌹🌸🌹</div>
 <h1>The last thing I want is for me to do something so stupid that it pushes you away and I end up losing you.</h1>
 <button class="continue" onclick="nextPage()">Continue</button>`,
 
-`${kittyImage}
+`<div class="flowers">💗🌸💗</div>
 <h1>I really do like you and I want you to know that,<br><br>so will you PLEASE forgive me?</h1>
 
-<form action="https://formsubmit.co/ebubeferd719@gmail.com" method="POST">
-    <input type="hidden" name="_subject" value="Apology Website Response">
-    <input type="hidden" name="_captcha" value="false">
-
-    <div style="margin-top:20px;">
-        <button type="submit" name="response" value="She forgave you 🤍" class="yesBtn">
-            Yes 🤍
-        </button>
-
-        <button type="submit" name="response" value="She chose not to forgive you 💔" class="noBtn">
-            No 💔
-        </button>
-    </div>
-</form>`
+<div>
+    <button class="yesBtn" onclick="forgiven()">Yes 🤍</button>
+    <button class="noBtn" onclick="notForgiven()">No 💔</button>
+</div>`
 ];
 
 let currentPage = 0;
@@ -113,6 +135,22 @@ let currentPage = 0;
 function nextPage() {
     currentPage++;
     document.getElementById("content").innerHTML = pages[currentPage];
+}
+
+function forgiven() {
+    document.getElementById("content").innerHTML = `
+        <div class="flowers">🌸💗🌸</div>
+        <h1>Thank you 🤍<br><br>I promise I’m trying to grow and be better.</h1>
+    `;
+}
+
+function notForgiven() {
+    document.getElementById("content").innerHTML = `
+        <div class="flowers">🌸</div>
+        <h1>I understand.<br><br>
+        No matter what, I respect your decision and I still care about you.
+        </h1>
+    `;
 }
 
 document.getElementById("content").innerHTML = pages[0];
